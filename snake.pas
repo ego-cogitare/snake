@@ -105,7 +105,7 @@ end;
 
 procedure drawMap();
 var
-        i, j, k: byte;
+        i, j: byte;
 begin
         for i := 1 to MAP_HEIGHT do begin
                 for j := 1 to MAP_WIDTH do begin
@@ -148,7 +148,7 @@ end;
 
 procedure drawSnake();
 var
-        i: byte;
+        i: integer;
 begin
         for i := 1 to snake.length do begin
                 gotoxy(snake.body[i].x * MAP_SCALE_X, snake.body[i].y);
@@ -159,8 +159,6 @@ begin
 			write(snake.bodyView);
 		end;
         end;
-        gotoxy(0, MAP_HEIGHT + 2);
-        write(' ');
 end;
 
 procedure moveSnake();
@@ -221,7 +219,7 @@ end;
 
 procedure handleInput();
 begin
-		case ord(key) of
+	case ord(key) of
                 72: begin
                         if snake.direction <> BOTTOM then snake.direction := TOP;
                 end;
@@ -243,20 +241,27 @@ begin
         end;
 end;
 
+procedure game();
 begin
         init();
         while true do begin
                 if keypressed() then key := readkey();
 		if ord(key) = 27 then break;
-                if gameLoopCounter = 10 then begin
+                if gameLoopCounter = 15 then begin
 		        handleInput();
                         moveSnake();
                         detectColisions();
                         drawMap();
                         drawSnake();
+		        gotoxy(0, MAP_HEIGHT + 2);
+			write(' ');
                         gameLoopCounter := 0;
                 end;
                 inc(gameLoopCounter);
                 delay(16);
         end;
+end;
+
+begin
+	game();
 end.
