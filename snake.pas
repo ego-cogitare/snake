@@ -7,19 +7,19 @@ type
                 headView: string;
                 bodyView: string;
                 body: array [1..255] of record
-						x,y: byte;
-				end;
+			x,y: byte;
+		end;
                 direction: (TOP, RIGHT, BOTTOM, LEFT);
         end;
 
         Tfood = record
                 x: byte;
                 y: byte;
-				view: string;
+		view: string;
         end;
 
 const
-		MAP_SCALE_X = 3;
+	MAP_SCALE_X = 3;
         MAP_WIDTH = 20;
         MAP_HEIGHT = 25;
         MAP_FIELD : array[1..MAP_HEIGHT, 1..MAP_WIDTH] of byte = (
@@ -30,11 +30,11 @@ const
                 (2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
                 (2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
                 (2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
-				(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
-				(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
-				(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
-				(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
-				(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
+		(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
+		(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
+		(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
+		(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
+		(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
                 (2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
                 (2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
                 (2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3),
@@ -98,9 +98,8 @@ begin
                 snake.body[snake.length - i + 1].y := MAP_HEIGHT - i;
         end;
         gameLoopCounter := 0;
-        key := chr(0);
-		
-		food.view := '[+]';
+        key := chr(0);		
+	food.view := '[+]';
         throwFood();
 end;
 
@@ -111,41 +110,40 @@ begin
         for i := 1 to MAP_HEIGHT do begin
                 for j := 1 to MAP_WIDTH do begin
                         gotoxy(j * MAP_SCALE_X, i);
-
                         case MAP_FIELD[i, j] of
                                 0: begin
-										write('   ');
-								end;
+					write('   ');
+				end;
                                 2: begin
-										write('  |');
-								end;
+					write('  |');
+				end;
                                 3: begin
-										write('|');
-								end;
+					write('|');
+				end;
                                 4: begin
-										write('---');
-								end;		
-								5: begin
-										write('  +');
-								end;
-								6: begin
-										write('+');
-								end;
+					write('---');
+				end;		
+				5: begin
+					write('  +');
+				end;
+				6: begin
+					write('+');
+				end;
                         end;
                 end;
         end;
 
-		textcolor(2);
-		if food.view = '[+]' then
-			food.view := '  '
-		else
-			food.view := '[+]';
+	textcolor(2);
+	if food.view = '[+]' then
+		food.view := '  '
+	else
+		food.view := '[+]';
         gotoxy(food.x * MAP_SCALE_X, food.y);
         write(food.view);
-		textcolor(7);
+	textcolor(7);
 
-		gotoxy(MAP_WIDTH * MAP_SCALE_X + 5, 2);
-		write('SCORE: ', snake.length - 4);
+	gotoxy(MAP_WIDTH * MAP_SCALE_X + 5, 2);
+	write('SCORE: ', snake.length - 4);
 end;
 
 procedure drawSnake();
@@ -157,9 +155,9 @@ begin
                 if i = 1 then begin
                         write(snake.headView);
                 end
-				else begin
-						write(snake.bodyView);
-				end;
+		else begin
+			write(snake.bodyView);
+		end;
         end;
         gotoxy(0, MAP_HEIGHT + 2);
         write(' ');
@@ -236,12 +234,12 @@ begin
                 75: begin
                         if snake.direction <> RIGHT then snake.direction := LEFT;
                 end;
-				13: begin
-						gotoxy((MAP_WIDTH div 2) * MAP_SCALE_X - 12, MAP_HEIGHT div 2);
-						write('Pause... return to continue.');
-						readln;
-						key := chr(0);
-				end;
+		13: begin
+			gotoxy((MAP_WIDTH div 2) * MAP_SCALE_X - 12, MAP_HEIGHT div 2);
+			write('Pause... return to continue.');
+			readln;
+			key := chr(0);
+		end;
         end;
 end;
 
@@ -251,7 +249,7 @@ begin
                 if keypressed() then key := readkey();
 				if ord(key) = 27 then break;
                 if gameLoopCounter = 10 then begin
-				        handleInput();
+		        handleInput();
                         moveSnake();
                         detectColisions();
                         drawMap();
