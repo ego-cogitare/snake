@@ -247,7 +247,7 @@ begin
         init();
         while true do begin
                 if keypressed() then key := readkey();
-				if ord(key) = 27 then break;
+		if ord(key) = 27 then break;
                 if gameLoopCounter = 10 then begin
 		        handleInput();
                         moveSnake();
